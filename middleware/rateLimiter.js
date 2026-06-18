@@ -4,6 +4,7 @@ const rateLimit = require('express-rate-limit');
 
 const windowMs  = parseInt(process.env.RATE_LIMIT_WINDOW_MS    || '900000', 10); // 15 min
 const maxReqs   = parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100',    10);
+const authMax   = parseInt(process.env.RATE_LIMIT_AUTH_MAX     || '10',     10);
 
 /**
  * General rate limiter — applied to all routes.
@@ -25,7 +26,7 @@ const generalLimiter = rateLimit({
  */
 const authLimiter = rateLimit({
   windowMs,
-  max:         10,
+  max:         authMax,
   standardHeaders: true,
   legacyHeaders:   false,
   message: {
